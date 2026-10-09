@@ -8,7 +8,9 @@ import {
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -78,14 +80,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { name: "author", content: "Satria Nur Ardiansyah" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
@@ -93,6 +90,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" },
     ],
   }),
   shellComponent: RootShell,
@@ -117,11 +115,21 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const links = [
+    { to: "/about", label: "About Me" },
+    { to: "/portfolio", label: "Portfolio" },
+    { to: "/profile", label: "Profile" },
+    { to: "/certification", label: "Sertification Information" },
+    { to: "/updates", label: "Updates" },
+    { to: "/contact", label: "Contact" },
+  ] as const;
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <header className="site-header"><div className="site-container"><div className="header-inner"><Link to="/" className="brand" onClick={() => setMenuOpen(false)}>SATRIA NUR ARDIANSYAH</Link><nav className="desktop-nav" aria-label="Primary navigation">{links.map(link => <Link className="nav-link" to={link.to} key={link.to}>{link.label}</Link>)}</nav><Button variant="ghost" size="icon" className="mobile-menu-button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</Button></div>{menuOpen && <nav className="mobile-nav" aria-label="Mobile navigation">{links.map(link => <Link className="nav-link" to={link.to} key={link.to} onClick={() => setMenuOpen(false)}>{link.label}</Link>)}</nav>}</div></header>
+      <main><Outlet /></main>
+      <footer className="site-footer"><div className="site-container footer-inner"><p>© {new Date().getFullYear()} Satria Nur Ardiansyah</p><p>Cataloger Elins Staff · Tuban, East Java</p></div></footer>
     </QueryClientProvider>
   );
 }
