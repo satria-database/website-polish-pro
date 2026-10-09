@@ -1,14 +1,15 @@
 import { Link } from "@tanstack/react-router";
-import { Award, ArrowRight, Send } from "lucide-react";
+import { Award, ArrowRight, Send, CalendarDays, BriefcaseBusiness, Globe } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
-import { images, heroDescription, aboutDescription, workExperience, education, certifications, projects, updates } from "@/lib/portfolio-data";
+import { images, aboutDescription, workExperience, education, certifications, projects, updates } from "@/lib/portfolio-data";
+import portrait from "@/assets/satria-portrait.png.asset.json";
 
 export function SectionHeading({ title, kicker }: { title: string; kicker?: string }) {
  return <div className="section-heading">{kicker && <p className="kicker">{kicker}</p>}<h2 className="section-title">{title}</h2><div className="short-rule" /></div>;
 }
 export function HeroSection() {
- return <section className="hero"><div className="site-container"><div className="hero-grid"><div><p className="kicker">Hello, I am</p><h1>Satria Nur<br />Ardiansyah</h1><p className="hero-role">CATALOGER ELINS STAFF<br />PT SONAR PERSADA MANUNGGAL<br />PROJECT AT PT SEMEN INDONESIA GROUP</p><div className="short-rule" /><p className="hero-summary">{heroDescription}</p><Button asChild variant="portfolio" className="hero-action"><Link to="/portfolio">View Portfolio <ArrowRight /></Link></Button></div><div className="hero-portrait"><img src={images[0]} alt="Satria Nur Ardiansyah — portfolio profile" fetchPriority="high" /></div></div><div className="stats">{[['3+', 'Years Experience'],['104','Projects Completed'],['3','Web Development']].map(([number,label])=><div className="stat" key={label}><p className="stat-number">{number}</p><p className="stat-label">{label}</p></div>)}</div></div></section>;
+  return <section className="hero"><div className="site-container"><div className="hero-grid"><div className="hero-copy"><p className="kicker">Hello, I am</p><h1>Satria Nur<br />Ardiansyah</h1><p className="hero-role">CATALOGER ELINS STAFF</p><div className="short-rule" /><p className="hero-summary">Experienced in product and material standardization, data management, and administrative activities, with a focus on accurate cataloguing and procurement support.</p><Button asChild variant="portfolio" className="hero-action"><Link to="/portfolio">View Portfolio <ArrowRight /></Link></Button></div><div className="hero-portrait"><img src={portrait.url} alt="Satria Nur Ardiansyah" fetchPriority="high" /></div></div><div className="stats">{[{number:'3+',label:'Years Experience',Icon:CalendarDays},{number:'104',label:'Projects Completed',Icon:BriefcaseBusiness},{number:'3',label:'Web Development',Icon:Globe}].map(({number,label,Icon})=><div className="stat" key={label}><span className="stat-icon"><Icon size={24} strokeWidth={1.7} /></span><div><p className="stat-number">{number}</p><p className="stat-label">{label}</p></div></div>)}</div></div></section>;
 }
 export function AboutSection() {
  return <section className="page-section"><div className="site-container about-grid"><SectionHeading title="About Me" /><div><p className="body-copy">{aboutDescription}</p><div className="contact-list"><p><strong>Email:</strong><a href="mailto:satria62317@gmail.com">satria62317@gmail.com</a></p><p><strong>Location:</strong>Teuku Umar Street, Latsari 2 No. 57, Tuban, East Java</p><p><strong>Phone:</strong><a href="tel:+6281216130661">081216130661</a></p><p><strong>LinkedIn:</strong><a href="https://www.linkedin.com/in/satria-nur16" target="_blank" rel="noreferrer">www.linkedin.com/in/satria-nur16</a></p></div></div></div></section>;
