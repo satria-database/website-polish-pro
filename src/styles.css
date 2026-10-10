@@ -69,8 +69,10 @@
 .hero-action { margin-top:22px; }
 .portfolio-button { border:1px solid var(--primary); background:transparent; color:var(--primary); border-radius:24px; height:40px; padding-inline:20px; font-size:13px; font-weight:700; }
 .portfolio-button:hover { background:var(--primary); color:var(--primary-foreground); }
-.hero-portrait { min-width:0; width:100%; max-width:370px; height:390px; justify-self:end; }
-.hero-portrait img { display:block; width:100%; height:100%; object-fit:contain; object-position:center bottom; border-radius:0 0 42% 42%; }
+.hero-portrait { min-width:0; position:relative; width:100%; max-width:370px; height:390px; justify-self:end; }
+.hero-portrait::before { content:""; position:absolute; left:-4%; right:6%; top:0; bottom:-4%; background:var(--muted); border-radius:55% 45% 48% 52% / 52% 46% 54% 48%; }
+.hero-portrait::after { content:""; position:absolute; right:-6px; top:16%; width:92px; height:150px; background:var(--accent); border-radius:46px 46px 0 46px; opacity:.9; }
+.hero-portrait img { display:block; position:relative; z-index:1; width:100%; height:100%; object-fit:contain; object-position:center bottom; border-radius:0 0 42% 42%; }
 .stats { display:grid; grid-template-columns:repeat(3,1fr); background:var(--card); border:1px solid var(--border); border-radius:8px; position:relative; margin-top:26px; box-shadow:var(--subtle-shadow); padding:20px 0; }
 .stat { padding:0 28px; display:flex; align-items:center; gap:17px; }
 .stat-icon { width:44px; height:44px; flex-shrink:0; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--secondary); color:var(--primary); }
