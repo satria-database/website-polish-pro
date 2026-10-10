@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Award, ArrowRight, Send, CalendarDays, BriefcaseBusiness, Globe } from "lucide-react";
+import { Award, ArrowRight, Send, CalendarDays, BriefcaseBusiness, Globe, ChevronDown } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { images, aboutDescription, workExperience, education, certifications, projects, updates } from "@/lib/portfolio-data";
@@ -24,7 +24,8 @@ export function PortfolioSection() {
  return <section className="page-section"><div className="site-container"><div className="section-heading"><p className="kicker">Web Development</p><h2 className="section-title">Websites Successfully Developed</h2><div className="short-rule" /></div><div className="card-grid">{projects.map(project=><article className="project-card" key={project.name}><img className="card-image" src={images[project.image]} alt={project.title} loading="lazy" /><div className="card-body"><p className="kicker">{project.name}</p><h3>{project.title}</h3><Link className="details-link" to="/contact">View details <ArrowRight size={14} /></Link></div></article>)}</div></div></section>;
 }
 export function UpdatesSection() {
- return <section className="page-section"><div className="site-container"><SectionHeading title="WORK PERFORMED THIS YEAR" /><div className="card-grid">{updates.map((update,i)=><article className="update-card" key={i}><img className="card-image" src={images[update.image]} alt={update.title.split('\n')[0]} loading="lazy" /><div className="card-body"><p className="kicker">{update.date}</p><h3>{update.title}</h3><p className="body-copy">{update.description}</p></div></article>)}</div></div></section>;
+ const [open,setOpen]=useState<number|null>(0);
+ return <section className="page-section"><div className="site-container"><SectionHeading title="WORK PERFORMED THIS YEAR" /><div className="updates-list">{updates.map((update,i)=>{const isOpen=open===i;const firstLine=update.title.split('\n')[0];const restLines=update.title.split('\n').slice(1).join('\n');return <div className={`update-item${isOpen?' is-open':''}`} key={i}><button type="button" className="update-toggle" aria-expanded={isOpen} onClick={()=>setOpen(isOpen?null:i)}><span className="update-date">{update.date}</span><span className="update-title">{firstLine}</span><ChevronDown className="update-chevron" size={18} strokeWidth={1.8} /></button>{isOpen&&<div className="update-panel"><div className="update-panel-grid"><img className="update-image" src={images[update.image]} alt={firstLine} loading="lazy" /><div>{restLines&&<h3 className="update-subtitle">{restLines}</h3>}<p className="body-copy">{update.description}</p></div></div></div>}</div>;})}</div></div></section>;
 }
 export function ContactSection() {
  const [status,setStatus]=useState('');

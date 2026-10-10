@@ -157,3 +157,27 @@
  .footer-inner { flex-direction:column; gap:10px; }
 }
 @media (prefers-reduced-motion:reduce) { *,*:before,*:after { transition:none !important; animation:none !important; } }
+
+/* Work performed this year — accordion list */
+.updates-list { display:flex; flex-direction:column; gap:12px; max-width:920px; margin:0 auto; }
+.update-item { border:1px solid var(--border); border-radius:6px; background:var(--muted); overflow:hidden; transition:box-shadow .2s,border-color .2s; }
+.update-item:hover { border-color:color-mix(in oklab, var(--accent) 40%, var(--border)); }
+.update-item.is-open { box-shadow:var(--subtle-shadow); }
+.update-toggle { display:flex; align-items:center; gap:16px; width:100%; padding:16px 22px; background:none; border:none; text-align:left; cursor:pointer; font:inherit; color:inherit; }
+.update-date { flex-shrink:0; min-width:132px; text-align:center; font-size:11px; letter-spacing:.08em; text-transform:uppercase; font-weight:600; color:var(--accent); background:color-mix(in oklab, var(--accent) 12%, transparent); padding:6px 10px; border-radius:999px; }
+.update-title { flex:1; font-weight:600; font-size:15px; line-height:1.4; }
+.update-chevron { flex-shrink:0; color:var(--accent); transition:transform .25s; }
+.update-item.is-open .update-chevron { transform:rotate(180deg); }
+.update-panel { padding:0 22px 22px; }
+.update-panel-grid { display:grid; grid-template-columns:260px 1fr; gap:20px; align-items:start; }
+.update-image { width:100%; aspect-ratio:1.65; object-fit:cover; border-radius:6px; border:1px solid var(--border); }
+.update-subtitle { font-size:15px; line-height:1.5; white-space:pre-line; margin-bottom:12px; }
+.update-panel .body-copy { font-size:13px; white-space:pre-line; }
+@media (max-width:720px) {
+  .updates-list { gap:10px; }
+  .update-toggle { padding:14px 16px; gap:12px; }
+  .update-date { min-width:0; font-size:10px; padding:5px 8px; }
+  .update-title { font-size:14px; }
+  .update-panel { padding:0 16px 16px; }
+  .update-panel-grid { grid-template-columns:1fr; gap:14px; }
+}
