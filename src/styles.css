@@ -201,3 +201,5 @@
  .work-info dt { font-size:9px; }
  .work-info dd { font-size:8px; }
 }
+
+.contact-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
