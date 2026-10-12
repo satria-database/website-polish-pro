@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Award, ArrowRight, Send, CalendarDays, BriefcaseBusiness, Globe, ChevronDown } from "lucide-react";
+import { Award, ArrowRight, Send, CalendarDays, BriefcaseBusiness, Globe, FileText, Layers, MapPin } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { images, aboutDescription, workExperience, education, certifications, projects, updates } from "@/lib/portfolio-data";
@@ -25,8 +25,28 @@ export function PortfolioSection() {
  return <section className="page-section"><div className="site-container"><div className="section-heading"><p className="kicker">Web Development</p><h2 className="section-title">Websites Successfully Developed</h2><div className="short-rule" /></div><div className="card-grid">{projects.map(project=><article className="project-card" key={project.name}><img className="card-image" src={images[project.image]} alt={project.title} loading="lazy" /><div className="card-body"><p className="kicker">{project.name}</p><h3>{project.title}</h3><Link className="details-link" to="/contact">View details <ArrowRight size={14} /></Link></div></article>)}</div></div></section>;
 }
 export function UpdatesSection() {
- const [open,setOpen]=useState<number|null>(0);
- return <section className="page-section"><div className="site-container"><SectionHeading title="WORK PERFORMED THIS YEAR" /><div className="updates-list">{updates.map((update,i)=>{const isOpen=open===i;const firstLine=update.title.split('\n')[0];const restLines=update.title.split('\n').slice(1).join('\n');return <div className={`update-item${isOpen?' is-open':''}`} key={i}><button type="button" className="update-toggle" aria-expanded={isOpen} onClick={()=>setOpen(isOpen?null:i)}><span className="update-date">{update.date}</span><span className="update-title">{firstLine}</span><ChevronDown className="update-chevron" size={18} strokeWidth={1.8} /></button>{isOpen&&<div className="update-panel"><div className="update-panel-grid"><img className="update-image" src={images[update.image]} alt={firstLine} loading="lazy" /><div>{restLines&&<h3 className="update-subtitle">{restLines}</h3>}<p className="body-copy">{update.description}</p></div></div></div>}</div>;})}</div></div></section>;
+  return <section className="page-section work-section"><div className="site-container">
+    <div className="work-heading"><div className="short-rule" /><h2 className="work-section-title">WORK PERFORMED THIS YEAR</h2><p>Berikut adalah beberapa pekerjaan yang telah saya kerjakan selama tahun ini.</p></div>
+    <div className="work-grid">{updates.map(update => {
+      const isTender = update.title.startsWith('Dokumen Tender');
+      const lines = update.title.split('\n').map(line => line.trim()).filter(Boolean);
+      const title = isTender ? 'Dokumen Tender' : lines[0];
+      const category = isTender ? update.title.replace('Dokumen Tender', '').trim() : (lines[1] ?? '');
+      const materials = lines.slice(2).map(line => line.replace(/^•\s*/, ''));
+      const tasks = update.description.split('•').map(task => task.trim()).filter(Boolean);
+      const materialLabel = category.replace(/\.\s*Meliputi\s*:?/i, '').replace(/,\s*/g, ', ');
+      const documents = update.description.includes('Bill of Quantity') ? `BOQ, HPP${update.description.includes('RFI') ? ', RFI' : ''}` : '—';
+      return <article className="work-card" key={`${update.date}-${update.title}`}>
+        <header className="work-card-header"><span className="work-date"><CalendarDays size={13} aria-hidden="true" />{update.date}</span><div><h3>{title}</h3>{materialLabel && <p>{materialLabel}</p>}</div></header>
+        <div className={`work-card-content${materials.length ? ' has-materials' : ''}`}>
+          <img className="work-image" src={images[update.image]} alt={materialLabel || title} loading="lazy" />
+          {materials.length > 0 && <div className="work-materials"><h4>{category.replace(/\s*:\s*$/, '')}:</h4><ul>{materials.map(material => <li key={material}>{material}</li>)}</ul></div>}
+          <div className="work-tasks">{isTender && <h4>Scope of Work</h4>}<ul>{tasks.map(task => <li key={task}>{task}</li>)}</ul></div>
+        </div>
+        <dl className="work-info"><div><span className="work-info-icon"><FileText size={16} aria-hidden="true" /></span><div><dt>Dokumen Terkait</dt><dd>{documents}</dd></div></div><div><span className="work-info-icon"><Layers size={16} aria-hidden="true" /></span><div><dt>Material</dt><dd>{isTender ? materialLabel : '—'}</dd></div></div><div><span className="work-info-icon"><MapPin size={16} aria-hidden="true" /></span><div><dt>Lingkup Pekerjaan</dt><dd>{isTender ? 'Tender Preparation & Procurement' : 'Cataloguing & Data Management'}</dd></div></div></dl>
+      </article>;
+    })}</div>
+  </div></section>;
 }
 export function ContactSection() {
  const [status,setStatus]=useState('');
