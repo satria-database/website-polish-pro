@@ -159,26 +159,45 @@
 }
 @media (prefers-reduced-motion:reduce) { *,*:before,*:after { transition:none !important; animation:none !important; } }
 
-/* Work performed this year — accordion list */
-.updates-list { display:flex; flex-direction:column; gap:12px; max-width:920px; margin:0 auto; }
-.update-item { border:1px solid var(--border); border-radius:6px; background:var(--muted); overflow:hidden; transition:box-shadow .2s,border-color .2s; }
-.update-item:hover { border-color:color-mix(in oklab, var(--accent) 40%, var(--border)); }
-.update-item.is-open { box-shadow:var(--subtle-shadow); }
-.update-toggle { display:flex; align-items:center; gap:16px; width:100%; padding:16px 22px; background:none; border:none; text-align:left; cursor:pointer; font:inherit; color:inherit; }
-.update-date { flex-shrink:0; min-width:132px; text-align:center; font-size:11px; letter-spacing:.08em; text-transform:uppercase; font-weight:600; color:var(--accent); background:color-mix(in oklab, var(--accent) 12%, transparent); padding:6px 10px; border-radius:999px; }
-.update-title { flex:1; font-weight:600; font-size:15px; line-height:1.4; }
-.update-chevron { flex-shrink:0; color:var(--accent); transition:transform .25s; }
-.update-item.is-open .update-chevron { transform:rotate(180deg); }
-.update-panel { padding:0 22px 22px; }
-.update-panel-grid { display:grid; grid-template-columns:260px 1fr; gap:20px; align-items:start; }
-.update-image { width:100%; aspect-ratio:1.65; object-fit:cover; border-radius:6px; border:1px solid var(--border); }
-.update-subtitle { font-size:15px; line-height:1.5; white-space:pre-line; margin-bottom:12px; }
-.update-panel .body-copy { font-size:13px; white-space:pre-line; }
-@media (max-width:720px) {
-  .updates-list { gap:10px; }
-  .update-toggle { padding:14px 16px; gap:12px; }
-  .update-date { min-width:0; font-size:10px; padding:5px 8px; }
-  .update-title { font-size:14px; }
-  .update-panel { padding:0 16px 16px; }
-  .update-panel-grid { grid-template-columns:1fr; gap:14px; }
+/* Work performed this year — material and scope cards */
+.work-section { background:var(--secondary); }
+.work-heading { margin-bottom:24px; }
+.work-heading .short-rule { margin:0 0 12px; }
+.work-section-title { font-size:26px; line-height:1.25; font-weight:700; }
+.work-heading > p { margin-top:8px; color:var(--muted-foreground); font-size:13px; line-height:1.6; }
+.work-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; align-items:stretch; }
+.work-card { display:flex; flex-direction:column; min-width:0; padding:14px; border-radius:6px; background:var(--card); box-shadow:var(--subtle-shadow); }
+.work-card-header { display:grid; grid-template-columns:132px minmax(0,1fr); gap:16px; align-items:start; margin-bottom:14px; }
+.work-date { display:flex; align-items:center; gap:6px; width:fit-content; max-width:100%; padding:6px 9px; border-radius:999px; color:var(--accent); background:color-mix(in oklab,var(--accent) 12%,var(--card)); font-size:9px; line-height:1.5; text-transform:uppercase; font-weight:700; }
+.work-date svg { flex-shrink:0; }
+.work-card-header h3 { font-size:14px; line-height:1.4; }
+.work-card-header p { font-size:10px; line-height:1.5; margin-top:2px; color:var(--muted-foreground); overflow-wrap:anywhere; }
+.work-card-content { display:grid; grid-template-columns:132px minmax(0,1fr); gap:16px; flex:1; align-content:start; margin-bottom:14px; }
+.work-card-content.has-materials { grid-template-columns:108px minmax(0,.9fr) minmax(0,1.1fr); gap:12px; }
+.work-image { display:block; width:100%; aspect-ratio:1.2; object-fit:contain; background:var(--muted); border-radius:4px; }
+.work-card h4 { font-size:10px; line-height:1.5; font-weight:700; margin-bottom:4px; }
+.work-card ul { padding:0 0 0 12px; margin:0; }
+.work-card li { padding-left:1px; line-height:1.6; overflow-wrap:anywhere; }
+.work-card li::marker { color:var(--accent); }
+.work-materials li { font-size:8px; }
+.work-tasks li { color:var(--muted-foreground); font-size:10px; }
+.work-tasks li + li { margin-top:6px; }
+.has-materials .work-tasks li { font-size:8px; }
+.work-info { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0; margin:0; padding:10px 0; background:var(--secondary); border-radius:4px; }
+.work-info > div { display:flex; gap:6px; align-items:start; padding:0 8px; min-width:0; }
+.work-info > div + div { border-left:1px solid var(--border); }
+.work-info-icon { display:flex; align-items:center; justify-content:center; flex-shrink:0; width:24px; height:24px; border-radius:50%; color:var(--primary); background:var(--muted); }
+.work-info dt { font-size:8px; font-weight:700; line-height:1.5; }
+.work-info dd { margin:3px 0 0; font-size:7px; line-height:1.5; color:var(--muted-foreground); overflow-wrap:anywhere; }
+@media (max-width:900px) { .work-grid { grid-template-columns:1fr; } }
+@media (max-width:480px) {
+ .work-section-title { font-size:22px; }
+ .work-card { padding:12px; }
+ .work-card-header { grid-template-columns:110px minmax(0,1fr); gap:12px; }
+ .work-card-content,.work-card-content.has-materials { grid-template-columns:110px minmax(0,1fr); gap:12px; }
+ .has-materials .work-tasks { grid-column:1 / -1; }
+ .work-materials li,.has-materials .work-tasks li { font-size:10px; }
+ .work-info > div { flex-direction:column; padding:0 7px; }
+ .work-info dt { font-size:9px; }
+ .work-info dd { font-size:8px; }
 }
