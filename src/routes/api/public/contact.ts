@@ -25,7 +25,7 @@ export const Route = createFileRoute('/api/public/contact')({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const ip = (request.headers.get('x-forwarded-for') ?? 'local').split(',')[0].trim();
+        const ip = (request.headers.get('x-forwarded-for') ?? 'local').split(',')[0]?.trim() ?? 'local';
         if (isRateLimited(ip)) {
           return Response.json({ ok: false, error: 'Too many messages sent. Please try again later.' }, { status: 429 });
         }
